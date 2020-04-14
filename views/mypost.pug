@@ -1,0 +1,55 @@
+extend base
+
+
+mixin navItem(link,text,icon,active)
+    li(class=`${active ? 'side-nav--active': ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`images/icons.svg#icon-${icon}`)
+            | #{text}
+        
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me','Settings','settings')
+                    +navItem('/myposts','My posts','speaker',true)
+                    +navItem('/editpost','Edit post','star')
+                    +navItem('/contribution','Contribution','user')
+                - if(user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('#','Manage tours','map')
+                            +navItem('#','Manage user','users')
+                            +navItem('#','Manage reviews','star')
+                            +navItem('#','Manage bookings','briefcase')
+
+
+            .user-view__content
+                .user-view__form-container
+
+                    h2.heading-secondary.ma-bt-md Your all posts
+                    
+                    .card-container-post
+                        each post, key in posts 
+                            .card
+                                .card__details
+                                    h4.card__sub-heading= post.name
+                                    -if(post.result)
+                                        each url in post.result.split(',')
+                                            li.card__text= url
+                                    -else
+                                        a(href=`/post/${post.slug}`).card__text You haven't use recommend service, here we go !!
+                                    .card__data
+                                        svg.card__icon
+                                            use(xlink:href='/images/icons.svg#icon-calendar')
+                                        span= post.createdAt.toLocaleString('en-us',{month:'long',year:'numeric'})
+                                        
+                                        p(class=`post-id` id=`post-id-${key}`)= post._id
+
+                                .card-post__footer
+                                    a.btn.btn--green.btn--small.btn-detail-post(href=`/post/${post.slug}`) Details
+                                    a.btn.btn--red.btn--small.btn-delete-post(href=`/`) Delete
+                                                  

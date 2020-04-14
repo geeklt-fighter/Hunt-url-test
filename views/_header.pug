@@ -1,0 +1,18 @@
+header.header   
+    nav.nav.nav--tours  
+        a.nav__el(href="/") All posts
+    .header__logo
+        img(src="/images/logo.png" alt="Natours logo")
+    nav.nav.nav--user
+
+        if user
+            a.nav__el.nav__el--logout(href="/logout") Log out
+            a.nav__el(href="/me") 
+                -if (user.photo) 
+                    img.nav__user-img(src=`${user.photo}` alt=`Photo of ${user.name}`)
+                -else
+                     img.nav__user-img(src=`/images/users/default.jpg` alt=`Photo of ${user.name}`)
+                span#username= user.name.split(' ')[0]
+        else
+            a.nav__el(href="/login") Log in
+            a.nav__el.nav__el--cta(href="/signUp") Sign up

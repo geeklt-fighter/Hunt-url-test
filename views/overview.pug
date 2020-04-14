@@ -1,0 +1,42 @@
+extends base
+
+block content
+    main.main
+        .card-container
+            each post in posts
+                .card
+                    .card__header
+                        .card__picture
+                            .card__picture-overlay &nbsp;
+                            img.card__picture-img(src=`${post.mediaResource}` alt=`${post.name}`)
+                        h3.heading-tertirary
+                            span= post.name 
+
+                    .card__details
+                        h4.card__sub-heading= `${post.difficulty} level post`
+                        p.card__text= post.summary
+                        //- .card__data
+                        //-     svg.card__icon
+                        //-         use(xlink:href='/img/icons.svg#icon-map-pin')
+                        //-     span= post.startLocation.description
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/images/icons.svg#icon-calendar')
+                            span= post.createdAt.toLocaleString('en-us',{month:'long',year:'numeric'})
+                        //- .card__data
+                        //-     svg.card__icon
+                        //-         use(xlink:href='/img/icons.svg#icon-flag')
+                        //-     span= `${post.locations.length} stops`
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/images/icons.svg#icon-user')
+                            span= `${post.poster.name}`
+
+                    .card__footer
+                        p
+                            span.card__footer-value= `${post.theme} `
+                        p.card__ratings
+                            span.card__footer-value= `${post.ratingsAverage} `
+                            |
+                            span.card__footer-text= `rating (${post.ratingsQuantity})`
+                        a.btn.btn--green.btn--small(href=`/post/${post.slug}`) Details

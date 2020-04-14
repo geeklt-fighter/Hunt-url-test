@@ -1,0 +1,68 @@
+extend base
+
+
+mixin navItem(link,text,icon,active)
+    li(class=`${active ? 'side-nav--active': ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`images/icons.svg#icon-${icon}`)
+            | #{text}
+        
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me','Settings','settings')
+                    +navItem('/myposts','My posts','speaker')
+                    +navItem('/editpost','Edit post','star',true)
+                    +navItem('/contribution','Contribution','user')
+                - if(user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('#','Manage tours','map')
+                            +navItem('#','Manage user','users')
+                            +navItem('#','Manage reviews','star')
+                            +navItem('#','Manage bookings','briefcase')
+
+                p.user-id#user-id #{user._id}
+
+            .user-view__content
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md Post your question !! 
+                    
+                    form.form.form-edit-post
+                        .form__group
+                            label.form__label(for='name') Post name
+                            input#postname.form__input(type='text' value=`type something`, required, name='name')
+                        //- Must change the theme section in the future, maybe using AI to give the theme
+                        .form__group
+                            label.form__label(for='level') Theme
+                            select#theme.form__input
+                                option(value="tech") Tech
+                                option(value="pet") Pet
+                                option(value="pet") Life
+                                option(value="language") Language
+                        .form__group
+                            label.form__label(for='level') Level
+                            select#level.form__input
+                                option(value="easy") easy
+                                option(value="medium") medium
+                                option(value="difficult") hard
+                        .form__group.ma-bt-md
+                            label.form__label(for='summary') Summary
+                            input#summary.form__input(type='text' value=`type something`, required, name='summary')
+                        .form_group
+                            label.form__label(for='description') Problem description
+                            textarea(cols="30", rows="10")#description.form__input
+                        
+                        .line &nbsp;
+                        .form__group.form__photo-upload
+                            input.form__upload(type="file" accept='image/*', id='photo', name='mediaResource')
+                            label(for="photo") Choose photo for this post
+                            p#file-name 
+                        .form__group.right
+                            button.btn.btn--small.btn--green Submit
+                  
+                    

@@ -1,0 +1,39 @@
+extend base
+
+
+mixin navItem(link,text,icon,active)
+    li(class=`${active ? 'side-nav--active': ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`images/icons.svg#icon-${icon}`)
+            | #{text}
+        
+block content
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me','Settings','settings')
+                    +navItem('/myposts','My posts','speaker')
+                    +navItem('/editpost','Edit post','star')
+                    +navItem('/contribution','Contribution','user',true)
+                - if(user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('#','Manage tours','map')
+                            +navItem('#','Manage user','users')
+                            +navItem('#','Manage reviews','star')
+                            +navItem('#','Manage bookings','briefcase')
+
+
+            .user-view__content
+                .user-view__form-container
+
+                    h2.heading-secondary.ma-bt-md #{user.name} contribution
+
+                    p.card__text Hello #{user.name}, welcome to this website. This website is using user's browsing history on Chrome as source. Memeber in this website can post their problem, and this website uses their description in the post to find the similar url in everyone's contribtuion. You can find some wanted url maybe someone provides and this question you have no idea how to search on google. This website is in the development stage, we need more user's data to test the feasibility. If you want to change your searching style, you can contribute your browsing history to make this website better. Thanks !!
+                    br
+                    br
+                    button.btn.btn--small.btn--green.btn-contribution#constribution Contribute your history
+                    

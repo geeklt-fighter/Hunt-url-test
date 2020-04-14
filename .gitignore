@@ -1,0 +1,9 @@
+.env
+
+node_modules/
+
+.cache/
+.vscode/
+
+
+data-process/
