@@ -1,5 +1,5 @@
 const multer = require('multer')
-// const sharp = require('sharp')
+const sharp = require('sharp')
 const azureStorage = require('azure-storage')
 const getStream = require('into-stream')
 const User = require('../models/userModel')
@@ -37,13 +37,13 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 
     req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`
 
-    // let data = await sharp(req.file.buffer)
-    //     .resize(500, 500)
-    //     .toFormat('jpeg')
-    //     .jpeg({ quality: 90 })
-    //     .toBuffer()
+    let data = await sharp(req.file.buffer)
+        .resize(500, 500)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toBuffer()
     // .toFile(`public/images/users/${req.file.filename}`)
-    const stream = getStream(req.file.buffer)
+    const stream = getStream(data)
     const streamLength = data.length
 
     blobService.createBlockBlobFromStream(containerName, req.file.filename, stream, streamLength, err => {
