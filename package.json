@@ -41,7 +41,7 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "mkdirp": "^1.0.3",
+    "mkdirp": "^1.0.4",
     "nodemon": "^2.0.2",
     "parcel-bundler": "^1.12.4"
   }
